@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Develop With Aman | Premium Game Solutions</title>
+    <meta name="description" content="Professional game development services: custom color prediction, casino scripts, admin panels, APK, hosting & domain. 24h delivery.">
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050b14;
+            color: #eef2ff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(0, 255, 150, 0.12), rgba(0, 20, 30, 0.96) 80%);
+            pointer-events: none;
+            z-index: -2;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(0, 255, 150, 0.03) 0px, rgba(0, 255, 150, 0.03) 2px, transparent 2px, transparent 12px);
+            pointer-events: none;
+            z-index: -1;
+        }
+        html {
+            scroll-padding-top: 80px;
+        }
+        .glass-nav {
+            background: rgba(6, 16, 24, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 170, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px -8px rgba(0,0,0,0.4);
+        }
+        .brand-minimal {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #e0f2fe, #60a5fa, #00ffaa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .nav-link-custom {
+            color: #cbd5e6;
+            font-weight: 500;
+            transition: 0.2s;
+            margin: 0 0.5rem;
+            position: relative;
+        }
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ffaa;
+            transition: width 0.3s ease;
+        }
+        .nav-link-custom:hover::after, .nav-link-custom.active::after {
+            width: 100%;
+        }
+        .nav-link-custom:hover, .nav-link-custom.active {
+            color: #00ffaa;
+        }
+        .hero-main {
+            padding: 4rem 0 3rem;
+            text-align: center;
+            position: relative;
+        }
+        .hero-badge {
+            background: rgba(0, 255, 170, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid #00ffaa;
+            color: #ccffdd;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 12px rgba(0,255,170,0.3);
+        }
+        .main-brand {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff, #80ffc0, #00ffaa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0,255,170,0.3);
+            animation: glowPulse 3s infinite;
+        }
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 10px rgba(0,255,170,0.2); }
+            50% { text-shadow: 0 0 30px rgba(0,255,170,0.6); }
+            100% { text-shadow: 0 0 10px rgba(0,255,170,0.2); }
+        }
+        .sub-brand {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #b9e6ff;
+            border-top: 2px solid rgba(0,255,170,0.6);
+            display: inline-block;
+            padding-top: 0.6rem;
+        }
+        .filter-sidebar {
+            background: rgba(8, 20, 32, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            position: sticky;
+            top: 100px;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            transition: all 0.3s;
+        }
+        .filter-btn {
+            background: rgba(15, 35, 55, 0.7);
+            border: none;
+            color: #e2e8f0;
+            font-weight: 600;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-radius: 1.4rem;
+            width: 100%;
+            margin-bottom: 0.7rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .filter-btn i {
+            width: 24px;
+        }
+        .filter-btn.active {
+            background: linear-gradient(95deg, #00aa66, #00ffaa);
+            color: #050b14;
+            box-shadow: 0 0 16px #00ffaa;
+        }
+        .filter-btn:hover:not(.active) {
+            background: rgba(0, 255, 170, 0.2);
+            transform: translateX(5px);
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.8rem;
+        }
+        .game-card {
+            background: rgba(12, 22, 35, 0.65);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 255, 170, 0.25);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            overflow: hidden;
+            position: relative;
+        }
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,170,0.1), transparent);
+            transition: left 0.6s;
+            pointer-events: none;
+        }
+        .game-card:hover::before {
+            left: 100%;
+        }
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: #00ffaa;
+            box-shadow: 0 20px 35px -12px rgba(0,255,170,0.4);
+        }
+        .card-header-plain {
+            background: linear-gradient(95deg, rgba(0, 40, 35, 0.8), rgba(0, 25, 35, 0.6));
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 255, 170, 0.4);
+        }
+        .badge-category {
+            background: rgba(0, 255, 170, 0.15);
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #bbffdd;
+            border: 1px solid #00ffaa;
+        }
+        .credential-box {
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 1.2rem;
+            padding: 0.9rem 1rem;
+            font-size: 0.8rem;
+            border-left: 3px solid #00ffaa;
+            transition: 0.2s;
+        }
+        .cred-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+        }
+        .cred-label {
+            font-weight: 700;
+            color: #a0c0e0;
+            min-width: 65px;
+        }
+        .copyable, .copy-icon {
+            cursor: pointer;
+            background: rgba(255,255,245,0.08);
+            padding: 3px 10px;
+            border-radius: 30px;
+            transition: 0.15s;
+            font-size: 0.7rem;
+        }
+        .copyable:hover, .copy-icon:hover {
+            background: #00ffaa;
+            color: #050b14;
+        }
+        .btn-demo, .btn-admin {
+            padding: 0.6rem 1.2rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-demo {
+            background: linear-gradient(105deg, #00aa66, #008844);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,170,100,0.4);
+        }
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,255,170,0.5);
+        }
+        .btn-admin {
+            background: rgba(30, 41, 59, 0.9);
+            color: #cff3ff;
+            border: 1px solid #00ffaa;
+        }
+        .btn-admin:hover {
+            background: #00ffaa20;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .premium-section {
+            background: radial-gradient(circle at 10% 20%, rgba(0, 30, 30, 0.8), rgba(3, 11, 23, 0.95));
+            border-radius: 2.5rem;
+            padding: 2rem 2rem 3rem;
+            border: 1px solid rgba(0, 255, 170, 0.4);
+            box-shadow: 0 25px 45px -12px black;
+            backdrop-filter: blur(8px);
+        }
+        .package-card {
+            background: linear-gradient(145deg, rgba(0,255,170,0.08), rgba(30, 41, 59, 0.7));
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(8px);
+        }
+        .package-card:hover {
+            transform: translateY(-6px);
+            border-color: #00ffaa;
+            box-shadow: 0 15px 30px -12px #00ffaa40;
+        }
+        .package-card.premium {
+            border: 2px solid #00ffaa;
+            box-shadow: 0 0 25px rgba(0,255,170,0.5);
+        }
+        .package-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #00ffaa;
+        }
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .timer-container {
+            background: linear-gradient(135deg, #0a5a3a, #00aa66);
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            box-shadow: 0 0 12px #00ffaa;
+        }
+        .upi-id {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #00ffaa;
+            border-radius: 1rem;
+            padding: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .payment-schedule-steps {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .schedule-step {
+            flex: 1;
+            background: rgba(0,0,0,0.4);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            text-align: center;
+            border-left: 3px solid #00ffaa;
+        }
+        .section-card {
+            background: rgba(12, 22, 35, 0.7);
+            backdrop-filter: blur(16px);
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            transition: 0.2s;
+        }
+        .contact-icon-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            text-align: center;
+            transition: 0.2s;
+            height: 100%;
+        }
+        .contact-icon-box:hover {
+            background: rgba(0, 255, 170, 0.1);
+            border: 1px solid #00ffaa;
+        }
+        .owner-card {
+            background: linear-gradient(145deg, rgba(0,255,170,0.1), rgba(0,0,0,0.7));
+            border-left: 5px solid #f59e0b;
+        }
+        .floating-social-group {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .float-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            transition: 0.2s;
+            box-shadow: 0 0 12px #00ffaa;
+        }
+        .float-icon:hover {
+            transform: scale(1.1);
+        }
+        .whatsapp-float { background: #25D366; }
+        .telegram-float { background: #1f8dd6; }
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #1e293b;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #00ffaa;
+            transition: 0.2s;
+        }
+        .back-to-top:hover {
+            background: #00ffaa;
+            color: #050b14;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0f212e;
+            backdrop-filter: blur(12px);
+            color: #b9f2ff;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            border-left: 4px solid #00ffaa;
+        }
+        @media (max-width: 768px) {
+            .main-brand { font-size: 2.5rem; }
+            .demo-grid { grid-template-columns: 1fr; }
+            .payment-schedule-steps { flex-direction: column; }
+            .premium-section { padding: 1.5rem; }
+            .package-card.premium { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+<div id="toastMsg" class="toast-msg">✓ Copied to clipboard</div>
+
+<!-- Sticky Header -->
+<header class="glass-nav py-2 position-sticky top-0 z-3">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="brand-minimal fw-bold"><i class="fas fa-crown text-primary me-2"></i> TYSON | DEVELOP WITH AMAN</div>
+            <div class="d-none d-md-flex gap-3">
+                <a href="#demos-section" class="nav-link-custom text-decoration-none">Demos</a>
+                <a href="#payment-package" class="nav-link-custom text-decoration-none">Packages</a>
+                <a href="#contact-section" class="nav-link-custom text-decoration-none">Contact</a>
+                <a href="#info-section" class="nav-link-custom text-decoration-none">Why Us</a>
+                <a href="#owner-section" class="nav-link-custom text-decoration-none">Owner</a>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="tel:+918092043236" class="btn btn-outline-info btn-sm rounded-pill px-3 d-none d-sm-block"><i class="fas fa-headset me-1"></i> +91 8092043236</a>
+                <button class="btn btn-primary btn-sm rounded-pill d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"><i class="fas fa-grid"></i></button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Hero -->
+<section class="hero-main">
+    <div class="container">
+        <div class="mb-3"><span class="hero-badge badge rounded-pill px-4 py-2"><i class="fas fa-code-branch me-1"></i> Premium Game Solutions</span></div>
+        <h1 class="main-brand">DEVELOP WITH AMAN</h1>
+        <div class="sub-brand mt-2">Tyson Game Demos | 24h Delivery | Full‑Stack Game Dev</div>
+        <p class="text-white-50 mt-3">Enterprise‑grade scripts, admin panels, APK, hosting & domain — all in one place</p>
+    </div>
+</section>
+
+<!-- Demos Section -->
+<section id="demos-section" class="container py-4">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="filter-sidebar">
+                <h5 class="fw-bold mb-3 fs-6"><i class="fas fa-compass me-2 text-info"></i> Categories</h5>
+                <div class="d-flex flex-column gap-2" id="filterGroup">
+                    <button class="filter-btn active" data-category="all"><i class="fas fa-th-large me-2"></i>All Demos</button>
+                    <button class="filter-btn" data-category="color-prediction"><i class="fas fa-chart-line me-2"></i>Color Prediction</button>
+                    <button class="filter-btn" data-category="casino"><i class="fas fa-dice-d6 me-2"></i>Casino & iGaming</button>
+                </div>
+                <hr class="bg-secondary opacity-25 my-4">
+                <div class="text-center">
+                    <i class="fas fa-rocket text-info fs-4 mb-2"></i>
+                    <p class="small text-white-50">Need a custom game? Contact the owner directly.</p>
+                    <a href="#owner-section" class="btn btn-sm btn-outline-warning rounded-pill">Meet Aman <i class="fas fa-user-astronaut ms-1"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <h5 class="fw-bold m-0"><i class="fas fa-cubes me-2 text-primary"></i>Live demo instances</h5>
+                <span class="badge bg-primary bg-opacity-25 text-info px-3 py-2 rounded-pill fs-6" id="demoCount"></span>
+            </div>
+            <div id="cardsContainer" class="demo-grid"><div class="text-center py-5 w-100">Loading demos...</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Payment & Package Section -->
+<section id="payment-package" class="container mb-5">
+    <div class="premium-section">
+        <div class="text-center mb-4">
+            <span class="badge bg-warning text-dark px-3 py-2 rounded-pill"><i class="fas fa-bolt"></i> LIMITED OFFER</span>
+            <h2 class="display-6 fw-bold mt-3">Complete Game <span class="text-warning">Package in 24h</span></h2>
+            <p class="text-white-50">Hosting, domain, admin panel, APK, website & full script – everything included</p>
+        </div>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4"><div class="package-card h-100"><div class="mb-3"><i class="fas fa-mobile-alt fa-2x text-primary"></i></div><h4>Basic Setup</h4><div class="package-price">₹5,000</div><ul class="features-list mt-3"><li><i class="fas fa-check text-success"></i> 6 Months Hosting</li><li><i class="fas fa-check text-success"></i> Basic Admin Panel</li><li><i class="fas fa-check text-success"></i> Game Script</li><li><i class="fas fa-times text-danger"></i> No APK</li><li><i class="fas fa-times text-danger"></i> No Custom Domain</li></ul><button class="btn btn-primary w-100 mt-3" onclick="selectPackage('basic')">Select Basic</button></div></div>
+            <div class="col-md-4"><div class="package-card premium h-100"><div class="bg-warning text-dark rounded-pill px-3 py-1 d-inline-block mb-2">🔥 MOST POPULAR</div><div class="mb-3"><i class="fas fa-gamepad fa-2x text-warning"></i></div><h4>Complete Package</h4><div class="package-price">₹10,000</div><ul class="features-list mt-3"><li><i class="fas fa-check text-success"></i> 1 Year Premium Hosting</li><li><i class="fas fa-check text-success"></i> 1 Year Domain (.com/.in)</li><li><i class="fas fa-check text-success"></i> Advanced Admin Panel</li><li><i class="fas fa-check text-success"></i> Android APK (Signed)</li><li><i class="fas fa-check text-success"></i> phpMyAdmin Access</li><li><i class="fas fa-check text-success"></i> 24/7 Support</li></ul><button class="btn btn-primary w-100 mt-3" onclick="selectPackage('complete')">Select Complete</button></div></div>
+            <div class="col-md-4"><div class="package-card h-100"><div class="mb-3"><i class="fas fa-rocket fa-2x text-primary"></i></div><h4>Enterprise</h4><div class="package-price">₹25,000</div><ul class="features-list mt-3"><li><i class="fas fa-check text-success"></i> 2 Years Enterprise Hosting</li><li><i class="fas fa-check text-success"></i> Custom Admin Panel</li><li><i class="fas fa-check text-success"></i> Android + iOS Apps</li><li><i class="fas fa-check text-success"></i> Priority Support</li></ul><button class="btn btn-primary w-100 mt-3" onclick="selectPackage('enterprise')">Select Enterprise</button></div></div>
+        </div>
+        <div id="paymentSection">
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="bg-dark bg-opacity-50 rounded-4 p-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                            <h3 class="mb-0"><i class="fas fa-lock text-primary me-2"></i> Secure Payment</h3>
+                            <div class="timer-container"><div class="small text-white-50">OFFER EXPIRES IN</div><div class="timer text-white" id="countdownTimer">05:00</div></div>
+                        </div>
+                        <div class="order-summary-card bg-black bg-opacity-40 rounded-4 p-3">
+                            <h5 class="fw-bold mb-3"><i class="fas fa-receipt"></i> Order Summary</h5>
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2"><span>Selected Package</span><strong id="selectedPackage">Complete Game Package</strong></div>
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2"><span>Total Price</span><strong id="totalPrice">₹10,000</strong></div>
+                            <div class="d-flex justify-content-between pb-2"><span>Advance (40%)</span><strong class="text-success fs-4" id="advanceAmount">₹4,000</strong></div>
+                        </div>
+                        <div class="mt-4"><h6 class="fw-bold"><i class="fas fa-calendar-week"></i> Payment Schedule</h6><div class="payment-schedule-steps"><div class="schedule-step">40%<div>Advance</div><small>to start</small></div><div class="schedule-step">30%<div>After Game Live</div><small>demo ready</small></div><div class="schedule-step">30%<div>On Delivery</div><small>final files</small></div></div></div>
+                        <div class="mt-4 bg-black bg-opacity-30 p-3 rounded-3"><div class="text-center mb-2"><i class="fas fa-qrcode text-primary"></i> Send Advance Payment To</div><div class="upi-id text-center" id="displayUpiId">8092043236@ybl</div><div class="d-flex gap-3 justify-content-center mt-3"><button class="btn btn-primary btn-sm" onclick="copyUpiId()"><i class="fas fa-copy"></i> Copy UPI ID</button><button class="btn btn-secondary btn-sm" onclick="openAllUpiApps()"><i class="fas fa-external-link-alt"></i> Pay with UPI</button></div><p class="text-center small text-white-50 mt-2">After payment, share screenshot on Telegram for instant confirmation</p></div>
+                    </div>
+                </div>
+                <div class="col-lg-5"><div class="bg-dark bg-opacity-50 rounded-4 p-4 text-center h-100 d-flex flex-column justify-content-center"><h4><i class="fas fa-qrcode text-primary"></i> Scan QR Code</h4><canvas id="qrCanvas" width="200" height="200" style="background:white; border-radius: 1rem; margin: 1rem auto; display: block;"></canvas><p class="small text-white-50">Scan with any UPI app (Google Pay, PhonePe, Paytm)</p><a href="https://t.me/pluginxpertcode" target="_blank" class="btn btn-outline-info btn-sm mt-2"><i class="fab fa-telegram"></i> Contact on Telegram</a></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Owner Section -->
+<section id="owner-section" class="container mb-5">
+    <div class="section-card p-4 p-lg-5 owner-card">
+        <div class="row align-items-center g-4">
+            <div class="col-md-3 text-center"><div class="bg-primary bg-opacity-20 rounded-circle p-3 d-inline-block"><i class="fas fa-user-tie fa-4x text-warning"></i></div></div>
+            <div class="col-md-9"><h2 class="fw-bold mb-2"><i class="fas fa-crown text-warning me-2"></i> About The Owner: Aman</h2><p class="lead fs-6 text-white-70">Full-stack game developer & founder of <strong class="text-info">"Develop With Aman"</strong>. Specialized in color prediction games, casino scripts, and complete iGaming ecosystems. 5+ years of experience, delivered 100+ projects worldwide.</p><div class="d-flex flex-wrap gap-3 mt-3"><a href="https://tyson-portfolio-v2.github.io/BIO/" target="_blank" class="btn btn-warning rounded-pill px-4"><i class="fas fa-globe me-2"></i> View Full Portfolio / BIO</a><a href="https://t.me/tyson_owner" target="_blank" class="btn btn-outline-light rounded-pill"><i class="fab fa-telegram"></i> Telegram: @tyson_owner</a></div><div class="mt-3 small text-white-50"><i class="fas fa-check-circle text-success"></i> Verified Creator | Premium Game Solutions | 24/7 Availability</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact-section" class="container mb-5">
+    <div class="section-card p-4 p-lg-5">
+        <h2 class="fw-bold mb-4 text-center"><i class="fas fa-address-card text-primary me-2"></i> Contact & Support</h2>
+        <div class="row g-4">
+            <div class="col-md-4"><div class="contact-icon-box"><i class="fab fa-telegram fa-3x text-info mb-3"></i><h5>Telegram Direct</h5><p class="small">@tyson_owner</p><button class="btn btn-sm btn-outline-info copyable-telegram" data-copy="@tyson_owner">Copy Username</button></div></div>
+            <div class="col-md-4"><div class="contact-icon-box"><i class="fab fa-whatsapp fa-3x text-success mb-3"></i><h5>WhatsApp</h5><p class="small">+91 8092043236</p><a href="https://wa.me/+918092043236?text=I%20need%20game%20dev%20package" target="_blank" class="btn btn-sm btn-success">Chat Now</a></div></div>
+            <div class="col-md-4"><div class="contact-icon-box"><i class="fab fa-youtube fa-3x text-danger mb-3"></i><h5>YouTube Channel</h5><p class="small">@developwithaman</p><a href="https://youtube.com/@developwithaman?si=Qt9Uc01-mnJ3OaXn" target="_blank" class="btn btn-sm btn-outline-danger">Subscribe</a></div></div>
+            <div class="col-12 mt-2"><div class="bg-black bg-opacity-30 p-3 rounded-4 text-center"><i class="fas fa-envelope me-2 text-info"></i> Email: aman@developwithaman.com  |  <i class="fas fa-headset me-2"></i> Priority support: Telegram @pluginxpertcode</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section id="info-section" class="container mb-5">
+    <div class="section-card p-4 p-lg-5">
+        <h2 class="fw-bold mb-4 text-center"><i class="fas fa-circle-info text-primary me-2"></i> Why Choose Develop With Aman?</h2>
+        <div class="row g-4">
+            <div class="col-md-6"><div class="d-flex gap-3 mb-3"><i class="fas fa-clock fa-2x text-primary"></i><div><h5 class="mb-1">24 Hours Delivery</h5><p class="small text-white-50">Fully functional game + admin panel + APK delivered within 24h after advance.</p></div></div><div class="d-flex gap-3 mb-3"><i class="fas fa-code fa-2x text-primary"></i><div><h5 class="mb-1">100% Source Code</h5><p class="small text-white-50">Full PHP/MySQL script, editable, no encryption. Full ownership.</p></div></div><div class="d-flex gap-3 mb-3"><i class="fas fa-mobile-alt fa-2x text-primary"></i><div><h5 class="mb-1">Android APK + Website</h5><p class="small text-white-50">Signed APK ready for playstore, along with responsive web app.</p></div></div></div>
+            <div class="col-md-6"><div class="d-flex gap-3 mb-3"><i class="fas fa-shield-alt fa-2x text-primary"></i><div><h5 class="mb-1">Secure Admin Panel</h5><p class="small text-white-50">Advanced dashboard, user management, withdrawal logs, analytics.</p></div></div><div class="d-flex gap-3 mb-3"><i class="fas fa-database fa-2x text-primary"></i><div><h5 class="mb-1">phpMyAdmin Access</h5><p class="small text-white-50">Full database control & backup, complete transparency.</p></div></div><div class="d-flex gap-3 mb-3"><i class="fas fa-headset fa-2x text-primary"></i><div><h5 class="mb-1">24/7 Dedicated Support</h5><p class="small text-white-50">Free installation, bug fixes, and 1 month free technical support.</p></div></div></div>
+        </div>
+        <hr class="bg-secondary opacity-25 my-4"><div class="text-center"><p class="mb-0 fw-light">⚡ Over 100+ successful game deployments | Trusted by global clients | Money-back guarantee</p></div>
+    </div>
+</section>
+
+<footer class="pt-4 pb-3 mt-2"><div class="container"><div class="row gy-3 align-items-center"><div class="col-md-6"><p class="text-white-50 small m-0">© 2025 Develop With Aman | Tyson Game Demos | Premium Game Dev Solutions</p></div><div class="col-md-6 text-md-end"><div class="d-flex gap-3 justify-content-md-end"><a href="https://t.me/pluginxpertcode" target="_blank" class="text-white-50 small"><i class="fab fa-telegram"></i> Telegram</a><a href="https://youtube.com/@developwithaman" target="_blank" class="text-white-50 small"><i class="fab fa-youtube"></i> YouTube</a><a href="https://tyson-portfolio-v2.github.io/BIO/" target="_blank" class="text-white-50 small"><i class="fas fa-user"></i> Owner BIO</a></div></div></div></div></footer>
+
+<div class="floating-social-group"><a href="https://wa.me/+918092043236?text=I%20want%20to%20explore%20premium%20demos" target="_blank" class="float-icon whatsapp-float"><i class="fab fa-whatsapp"></i></a><a href="https://t.me/tyson_owner" target="_blank" class="float-icon telegram-float"><i class="fab fa-telegram-plane"></i></a></div>
+<div class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></div>
+
+<script>
+    // Complete demo data (23 entries, no errors)
+    const gamesData = [
+        { name: "Mudiclub Demo", category: "color-prediction", userUrl: "https://dmzones.top/#/register?invitationCode=926677022481", username: "9898989898", password: "9898989898", adminUrl: "https://dmzones.top/main", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Bigmumbai Demo", category: "color-prediction", userUrl: "https://4nixelub.shop/#/promotion/Promotionshare?code=926677022481", username: "9898989898", password: "9898989898", adminUrl: "https://4nixelub.shop/main", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Dkwin BDT Demo", category: "color-prediction", userUrl: "https://bitbox.space/#/register?invitationCode=official", username: "9898989898", password: "9898989898", adminUrl: "https://bitbox.space/Adminxxx/", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Hygenic BDT Demo", category: "color-prediction", userUrl: "https://catwin.shop/#/register?invitationCode=official", username: "9898989898", password: "9898989898", adminUrl: "https://catwin.shop/GAMING999", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "TASHANWIN", category: "color-prediction", userUrl: "https://tashanzones.top/#/register?invitationCode=929773424396", username: "9898989898", password: "9898989898", adminUrl: "https://tashanzones.top/Adminxxx/", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "RAJA GAME", category: "color-prediction", userUrl: "https://rcjazones.site/#/register?invitationCode=3", username: "9898989898", password: "9898989898", adminUrl: "https://rcjazones.site/admin", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "BIGDADDY", category: "casino", userUrl: "https://xipgame05.online/#/register?invitationCode=647100000007", username: "1234567890", password: "1234567890", adminUrl: "https://xipgame05.online/admin", adminUser: "1234567890", adminPass: "1234567890" },
+        { name: "BANGLADESH", category: "casino", userUrl: "https://bdgbdt.site/", username: "9898989898", password: "9898989898", adminUrl: "https://bdgbdt.site/Chub94", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "JEETOSHOP", category: "color-prediction", userUrl: "https://jeetoshop.site", username: "9898989898", password: "9898989898", adminUrl: "https://jeetoshop.site/24gameadmin", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "JALWA", category: "color-prediction", userUrl: "https://tshopmart.shop/#/register?invitationCode=926677022481", username: "9898989898", password: "9898989898", adminUrl: "https://tshopmart.shop/main", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "DIUWIN", category: "color-prediction", userUrl: "https://sixclubzones.top", username: "9898989898", password: "9898989898", adminUrl: "https://sixclubzones.top/admin", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Bigdaddy", category: "casino", userUrl: "https://banglowino.shop", username: "9898989898", password: "9898989898", adminUrl: "https://banglowino.shop/admin", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Satka matka Result Demo", category: "color-prediction", userUrl: "https://coursemandi.in/", username: "admin", password: "12345678", adminUrl: "https://coursemandi.in/admin", adminUser: "admin", adminPass: "12345678" },
+        { name: "Satka matka App Demo", category: "color-prediction", userUrl: "https://jalwagagamer.shop", username: "admin", password: "12345678", adminUrl: "https://jalwagagamer.shop/admin", adminUser: "admin", adminPass: "12345678" },
+        { name: "55 CLUB", category: "color-prediction", userUrl: "https://vasudevdemo.shop", username: "9898989898", password: "9898989898", adminUrl: "https://vasudevdemo.shop/admin", adminUser: "9898989898", adminPass: "9898989898" },
+        { name: "Satta matka Website Demo", category: "color-prediction", userUrl: "https://jackpotonline.shop/", username: "admin", password: "12345678", adminUrl: "https://jackpotonline.shop/", adminUser: "admin", adminPass: "12345678" },
+        { name: "Binary Trading Demo", category: "casino", userUrl: "https://pushpaclub.site/", username: "admin", password: "12345678", adminUrl: "https://pushpaclub.site/", adminUser: "admin", adminPass: "12345678" },
+        { name: "64 Trading Demo", category: "casino", userUrl: "https://64trade.site/", username: "admin", password: "12345678", adminUrl: "https://64trade.site/", adminUser: "admin", adminPass: "12345678" },
+        { name: "Cycle investment Demo", category: "casino", userUrl: "https://vasudevdemo.sbs/", username: "admin", password: "12345678", adminUrl: "https://vasudevdemo.sbs/", adminUser: "admin", adminPass: "12345678" },
+        { name: "Ludo Tournament Demo", category: "casino", userUrl: "https://tejbit.sbs/", username: "mereram@gmail.com", password: "12345678", adminUrl: "https://tejbit.sbs/master", adminUser: "mereram@gmail.com", adminPass: "12345678" },
+        { name: "Aviator Demo", category: "casino", userUrl: "https://aviatortfys.shop/", username: "admin", password: "12345678", adminUrl: "https://aviatortfys.shop/", adminUser: "admin", adminPass: "12345678" },
+        { name: "Satkamatka New Ui", category: "color-prediction", userUrl: "https://otp.damannew.com/", username: "admin", password: "12345678", adminUrl: "https://otp.damannew.com/admin", adminUser: "admin", adminPass: "12345678" },
+        { name: "No Api", category: "color-prediction", userUrl: "https://xipgame05.online", username: "8306450141", password: "123456", adminUrl: "https://xipgame05.online/admin", adminUser: "8306450141", adminPass: "123456" }
+    ];
+
+    // Helper: copy to clipboard with fallback
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("✓ Copied: " + text.substring(0, 30));
+            }).catch(() => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast("✓ Copied: " + text.substring(0, 30));
+    }
+    function showToast(msg) {
+        const toast = document.getElementById('toastMsg');
+        if (toast) {
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 1500);
+        }
+    }
+
+    // Render demo cards
+    let currentCategory = "all";
+    function renderCards() {
+        const container = document.getElementById('cardsContainer');
+        if (!container) return;
+        const filtered = currentCategory === "all" ? gamesData : gamesData.filter(g => g.category === currentCategory);
+        const countSpan = document.getElementById('demoCount');
+        if (countSpan) countSpan.innerText = `${filtered.length} demo${filtered.length !== 1 ? 's' : ''}`;
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="col-12 text-center py-5"><p>No demos in this category.</p></div>`;
+            return;
+        }
+        let html = '';
+        filtered.forEach(game => {
+            const catDisplay = game.category === 'color-prediction' ? '🎨 Color Prediction' : '🎰 Casino / iGaming';
+            html += `<div class="game-card">
+                <div class="card-header-plain d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0 fs-6">${escapeHtml(game.name)}</h5>
+                    <span class="badge-category">${catDisplay}</span>
+                </div>
+                <div class="p-4">
+                    <div class="credential-box">
+                        <div class="cred-row"><span class="cred-label">🌐 User URL:</span> <a href="${game.userUrl}" target="_blank" class="text-info small">${game.userUrl.replace('https://','')}</a><i class="fas fa-copy copy-icon ms-1" data-copy="${game.userUrl}"></i></div>
+                        <div class="cred-row"><span class="cred-label">👤 Login:</span> <span class="copyable" data-copy="${game.username}">${escapeHtml(game.username)}</span> / <span class="copyable" data-copy="${game.password}">${escapeHtml(game.password)}</span></div>
+                        <div class="cred-row"><span class="cred-label">⚙️ Admin:</span> <a href="${game.adminUrl}" target="_blank" class="text-info small">${game.adminUrl.replace('https://','').substring(0,45)}</a><i class="fas fa-copy copy-icon ms-1" data-copy="${game.adminUrl}"></i></div>
+                        <div class="cred-row"><span class="cred-label">🔐 Admin auth:</span> <span class="copyable" data-copy="${game.adminUser}">${escapeHtml(game.adminUser)}</span> / <span class="copyable" data-copy="${game.adminPass}">${escapeHtml(game.adminPass)}</span></div>
+                    </div>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="${game.userUrl}" target="_blank" class="btn-demo"><i class="fas fa-play-circle"></i> Launch Demo</a>
+                        <a href="${game.adminUrl}" target="_blank" class="btn-admin"><i class="fas fa-shield-alt"></i> Admin Panel</a>
+                    </div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        // Attach copy event listeners
+        document.querySelectorAll('.copyable, .copy-icon').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                let txt = el.getAttribute('data-copy') || el.innerText;
+                if (txt) copyToClipboard(txt);
+            });
+        });
+    }
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Filter buttons
+    function initFilters() {
+        const btns = document.querySelectorAll('.filter-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.getAttribute('data-category');
+                renderCards();
+            });
+        });
+    }
+
+    // Package selection & payment
+    let countdownMinutes = 5, countdownSeconds = 0, countdownInterval;
+    function startCountdown() {
+        const timerEl = document.getElementById('countdownTimer');
+        if (!timerEl) return;
+        countdownInterval = setInterval(() => {
+            if (countdownSeconds === 0) {
+                if (countdownMinutes === 0) {
+                    clearInterval(countdownInterval);
+                    timerEl.innerText = "EXPIRED";
+                    timerEl.style.color = "#ef4444";
+                    return;
+                }
+                countdownMinutes--;
+                countdownSeconds = 59;
+            } else {
+                countdownSeconds--;
+            }
+            timerEl.innerText = `${String(countdownMinutes).padStart(2,'0')}:${String(countdownSeconds).padStart(2,'0')}`;
+        }, 1000);
+    }
+    window.selectPackage = function(type) {
+        const pkg = {
+            basic: { name: 'Basic Setup Package', price: 5000, advance: 2000 },
+            complete: { name: 'Complete Game Package', price: 10000, advance: 4000 },
+            enterprise: { name: 'Enterprise Package', price: 25000, advance: 10000 }
+        };
+        const selected = pkg[type];
+        if (!selected) return;
+        document.getElementById('selectedPackage').innerText = selected.name;
+        document.getElementById('totalPrice').innerHTML = `₹${selected.price.toLocaleString()}`;
+        document.getElementById('advanceAmount').innerHTML = `₹${selected.advance.toLocaleString()}`;
+        updateQRCode(selected.advance);
+        document.getElementById('payment-package').scrollIntoView({ behavior: 'smooth' });
+    };
+    function drawSimpleQR(ctx, amount) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 200, 200);
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(20, 20, 40, 40);
+        ctx.fillRect(20, 140, 40, 40);
+        ctx.fillRect(140, 20, 40, 40);
+        ctx.font = 'bold 14px Inter';
+        ctx.fillStyle = '#1e293b';
+        ctx.textAlign = 'center';
+        ctx.fillText(`₹${amount}`, 100, 180);
+        ctx.font = '10px monospace';
+        ctx.fillStyle = '#475569';
+        ctx.fillText('8092043236@ybl', 100, 195);
+    }
+    function updateQRCode(amount) {
+        const canvas = document.getElementById('qrCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            drawSimpleQR(ctx, amount);
+        }
+    }
+    window.copyUpiId = function() {
+        copyToClipboard('8092043236@ybl');
+    };
+    window.openAllUpiApps = function() {
+        const amount = document.getElementById('advanceAmount').innerText.replace(/[^0-9]/g, '');
+        window.location.href = `upi://pay?pa=8092043236@ybl&pn=Tyson%20Dev&am=${amount}&cu=INR`;
+        setTimeout(() => copyToClipboard('8092043236@ybl'), 800);
+    };
+
+    // Back to top
+    document.getElementById('backToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+        renderCards();
+        initFilters();
+        startCountdown();
+        const canvas = document.getElementById('qrCanvas');
+        if (canvas) drawSimpleQR(canvas.getContext('2d'), 4000);
+        document.querySelectorAll('.copyable-telegram').forEach(el => {
+            el.addEventListener('click', () => copyToClipboard('@tyson_owner'));
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Offcanvas Mobile Menu -->
+<div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="mobileMenu">
+    <div class="offcanvas-header"><h5 class="offcanvas-title text-white">Menu</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button></div>
+    <div class="offcanvas-body">
+        <ul class="nav flex-column gap-3">
+            <li><a href="#demos-section" class="text-white text-decoration-none">Demos</a></li>
+            <li><a href="#payment-package" class="text-white-50 text-decoration-none">Payment & Package</a></li>
+            <li><a href="#contact-section" class="text-white-50 text-decoration-none">Contact</a></li>
+            <li><a href="#info-section" class="text-white-50 text-decoration-none">Info</a></li>
+            <li><a href="#owner-section" class="text-white-50 text-decoration-none">Owner Bio</a></li>
+            <li><a href="tel:+918092043236" class="btn btn-outline-light w-100 rounded-pill mt-3"><i class="fas fa-phone-alt"></i> Call +91 8092043236</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
